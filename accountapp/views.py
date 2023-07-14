@@ -22,11 +22,8 @@ def hello_world(request):
         new_hello_world.text = temp
         new_hello_world.save()
 
-        hello_world_list = HelloWorld.objects.all()
-
         return HttpResponseRedirect(reverse('accountapp:hello_world'))
     else:
-
         hello_world_list = HelloWorld.objects.all()
         return render(request, 'accountapp/hello_world.html', context={'hello_world_list': hello_world_list})
 
@@ -46,9 +43,11 @@ class AccountUpdateView(UpdateView):
     model = User
     form_class = AccountUpdateForm
     success_url = reverse_lazy('accountapp:hello_world')
+    context_object_name = 'target_user'
     template_name = 'accountapp/update.html'
 
 class AccountDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('accountapp:login')
+    context_object_name = 'target_user'
     template_name = 'accountapp/delete.html'
